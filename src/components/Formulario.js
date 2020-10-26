@@ -28,6 +28,9 @@ const Formulario = ({ crearCita }) => {
   const submitCita = (e) => {
     e.preventDefault();
 
+    // revisar cambio del state desde los test
+    console.log(cita)
+    
     // Validar
     if (
       mascota.trim() === "" ||
@@ -63,12 +66,15 @@ const Formulario = ({ crearCita }) => {
       <h2 data-testid="titulo">Crear Cita</h2>
 
       {error ? (
-        <p className="alerta-error">Todos los campos son obligatorios</p>
+        <p data-testid="alerta" className="alerta-error">
+          Todos los campos son obligatorios
+        </p>
       ) : null}
 
       <form onSubmit={submitCita}>
         <label>Nombre Mascota</label>
         <input
+          data-testid="mascota"
           type="text"
           name="mascota"
           className="u-full-width"
@@ -79,6 +85,7 @@ const Formulario = ({ crearCita }) => {
 
         <label>Nombre Dueño</label>
         <input
+        data-testid="propietario"
           type="text"
           name="propietario"
           className="u-full-width"
@@ -126,7 +133,7 @@ const Formulario = ({ crearCita }) => {
 };
 
 Formulario.propTypes = {
-  // crearCita: PropTypes.func.isRequired,
+  crearCita: PropTypes.func.isRequired,
 };
 
 export default Formulario;
