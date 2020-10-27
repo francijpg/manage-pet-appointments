@@ -40,7 +40,7 @@ function App() {
 
   return (
     <Fragment>
-      <h1>Administrador de Mascotas</h1>
+      <h1 data-testid="nombre-app">Administrador de Mascotas</h1>
 
       <div className="container">
         <div className="row">
@@ -50,7 +50,7 @@ function App() {
               />
           </div>
           <div className="one-half column">
-              <h2>{titulo}</h2>
+              <h2 data-testid="titulo-dinamico">{titulo}</h2>
               {citas.map(cita => (
                 <Cita
                   key={cita.id}
