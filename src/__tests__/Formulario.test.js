@@ -1,7 +1,8 @@
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Formulario from "../components/Formulario";
 import "@testing-library/jest-dom/extend-expect";
+import userEvent from "@testing-library/user-event";
 
 const crearCita = jest.fn();
 
@@ -33,7 +34,8 @@ test("<Formulario /> Validación de formulario", () => {
 
   //Click en el botón de submit
   const btnSubmit = screen.getByTestId("btn-submit");
-  fireEvent.click(btnSubmit);
+  // fireEvent.click(btnSubmit);
+  userEvent.click(btnSubmit);
 
   // Revisar por la alerta
   const alerta = screen.getByTestId("alerta");
@@ -48,14 +50,30 @@ test("<Formulario /> Validación de formulario", () => {
 test("<Formulario /> Validación de formulario", () => {
   render(<Formulario crearCita={crearCita} />);
 
-  fireEvent.change(screen.getByTestId("mascota"), {
-    target: { value: "Hook" },
-  });
-  fireEvent.change(screen.getByTestId("propietario"), {
-    target: { value: "React" },
-  });
+  // using FireEvent
+  // fireEvent.change(screen.getByTestId("mascota"), {
+  //   target: { value: "Hook" },
+  // });
+  // fireEvent.change(screen.getByTestId("propietario"), {
+  //   target: { value: "React" },
+  // });
+
+  //using userEvent
+  userEvent.type(screen.getByTestId("mascota"), "Hook");
+  userEvent.type(screen.getByTestId("propietario"), "React");
+  userEvent.type(screen.getByTestId("fecha"), "2020-10-20");
+  userEvent.type(screen.getByTestId("hora"), "09:30");
+  userEvent.type(screen.getByTestId("sintomas"), "Solo Aprende");
 
   //Click en el botón de submit
   const btnSubmit = screen.getByTestId("btn-submit");
-  fireEvent.click(btnSubmit);
+  userEvent.click(btnSubmit);
+
+  // Revisar por la alerta
+  const alerta = screen.queryByTestId("alerta");
+  expect(alerta).not.toBeInTheDocument();
+
+  // Crear cita y comprobar que se haya llamado
+  expect(crearCita).toHaveBeenCalled();
+  expect(crearCita).toHaveBeenCalledTimes(1);
 });
